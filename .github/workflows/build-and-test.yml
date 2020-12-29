@@ -1,24 +1,18 @@
-name: Build
-
 on: [push]
 
-env:
-  BUILD_TYPE: MinSizeRel
+name: BuildAndValgrind
 
 jobs:
-  ubuntu:
+  build_and_test:
+    name: 
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v2
-      with: 
-        submodules: recursive
-        fetch-depth: 0
-    - name: Build
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
       - uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --release
-
-    - name: Test with Valgrind
-      run: ./run-under-valgrind.sh
+          args: --release --all-features
+      - run: ./run-under-valgrind.sh
