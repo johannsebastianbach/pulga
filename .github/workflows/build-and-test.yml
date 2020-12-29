@@ -1,0 +1,24 @@
+name: Build
+
+on: [push]
+
+env:
+  BUILD_TYPE: MinSizeRel
+
+jobs:
+  ubuntu:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with: 
+        submodules: recursive
+        fetch-depth: 0
+    - name: Build
+      - uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release
+
+    - name: Test with Valgrind
+      run: ./run-under-valgrind.sh
