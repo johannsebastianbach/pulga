@@ -7,7 +7,7 @@ jobs:
     name: 
     runs-on: ubuntu-latest
     steps:
-      - run: sudo apt install -y valgrind
+      - run: sudo apt update && sudo apt install -y valgrind
       - uses: actions/checkout@v2
       - uses: actions-rs/toolchain@v1
         with:
